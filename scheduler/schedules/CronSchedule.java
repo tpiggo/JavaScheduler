@@ -1,13 +1,11 @@
 package scheduler.schedules;
 
-import java.time.LocalDate;
 import java.util.Calendar;
-import java.util.Collection;
 import java.util.Date;
 
-import scheduler.Days;
+import scheduler.enums.Days;
 
-public class CronSchedule implements Schedule {
+public class CronSchedule extends AbstractSchedule {
     public static final long MAGIC=86400000L;
     private Days [] scheduledOn;
     private long time;
@@ -46,7 +44,7 @@ public class CronSchedule implements Schedule {
         return MAGIC - aDate.getTime()/MAGIC + maxDistance * MAGIC + this.time;
     }
 
-    public long getNextRun(){
+    protected long getNextRun(){
         Date aDate = new Date();
         long currentTime = aDate.getTime()/MAGIC;
         if (this.time > currentTime) {
@@ -54,5 +52,4 @@ public class CronSchedule implements Schedule {
         }
         return getNextRun(aDate);
     }
-
 }
