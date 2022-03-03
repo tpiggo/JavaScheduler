@@ -1,14 +1,15 @@
 package scheduler;
 import scheduler.exec.SchedulerTimer;
+import scheduler.exec.SchedulerTimerTask;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 public class Scheduler {
-    List<SchedulableTask> taskList;
-    HashMap<String, SchedulableTask> taskMap;
-    SchedulerTimer aTimer;
+    private List<SchedulableTask> taskList;
+    private HashMap<String, SchedulableTask> taskMap;
+    private SchedulerTimer aTimer;
+    private Calendar calendar = Calendar.getInstance();
+
     public Scheduler(JobStore jobStore, SchedulableTask ...tasks) {
         taskList = new ArrayList<>();
         aTimer = new SchedulerTimer();
@@ -22,12 +23,28 @@ public class Scheduler {
         // taskList is a sorted list
         // insert it in the sorted list
         long nextRun = task.nextRun();
+
+
+        long run = taskList.get(0).nextRun();
+        aTimer.schedule(new SchedulerTimerTask(this), run);
     }
 
+    private String getTimeFormatted() {
+        return "";
+    }
 
 
     private String getHashedId(){
         return "0";
+    }
+
+    public void runNext() {
+        SchedulableTask t = taskList.remove(0);
+        StringBuilder builder = new StringBuilder("Task ");
+        builder.append(getTimeFormatted());
+        builder.append(" running ");
+        builder.append(t.getName());
+        System.out.println(builder.toString());
     }
 
 }

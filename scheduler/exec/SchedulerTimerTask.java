@@ -1,18 +1,18 @@
 package scheduler.exec;
 
-import scheduler.Task;
+import scheduler.Scheduler;
 
 import java.util.TimerTask;
 
-public class SchedulerTimerTask<T> extends TimerTask {
-    Task <T> task;
-    public SchedulerTimerTask(Task <T> task){
+public class SchedulerTimerTask extends TimerTask {
+    Scheduler aScheduler;
+    public SchedulerTimerTask(Scheduler pScheduler){
         super();
-        this.task = task;
+        aScheduler = pScheduler;
     }
 
     @Override
     public void run() {
-            this.task.run();
+            aScheduler.runNext();
     }
 }

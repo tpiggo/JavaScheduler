@@ -23,4 +23,8 @@ public class SchedulerTask<T> implements SchedulableTask {
     public void run(){
         lastOut = aTask.run();
     }
+
+    public String getName(){
+        return taskName;
+    }
 }
